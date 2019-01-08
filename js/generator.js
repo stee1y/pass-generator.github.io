@@ -1,12 +1,12 @@
-var arr2,
+var arr1,
+    arr2,
     arr3,
-    arr4,
-    arr5;
+    arr4;
 
-arr2 = [1,2,3,4,5,6,7,8,9,0];
-arr3 = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
-arr4 = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
-arr5 = ['!','@','#','$','%','^','&','*'];
+arr1 = [1,2,3,4,5,6,7,8,9,0];
+arr2 = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
+arr3 = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
+arr4 = ['!','@','#','$','%','^','&','*'];
 
                                 // длинна строки
 document.getElementById('line-length').oninput = function () {
@@ -25,17 +25,14 @@ document.getElementById('generator').onclick = generatePass;
 function generatePass() {
     var result = [];
     if(document.getElementById('numbers').checked){     // включение цыфр в пароль при нажатом флаге
-        result = result.concat(arr2);
+        result = result.concat(arr1);
     }if(document.getElementById('small-letters').checked){      // включение строчных букв в пароль при нажатом флаге
-        result = result.concat(arr3);
+        result = result.concat(arr2);
     }if(document.getElementById('big-letters').checked){        // включение прописных букв в пароль при нажатом флаге
-        result = result.concat(arr4);
+        result = result.concat(arr3);
     }if(document.getElementById('special-characters').checked){     // включение спецсимволов в пароль при нажатом флаге
-        result = result.concat(arr5);
+        result = result.concat(arr4);
     };
-
-                                // сортировка записаного массива рандомно
-    result.sort(random);
 
                                 // очищение строк
     document.getElementById('out').innerHTML = '';
@@ -43,31 +40,48 @@ function generatePass() {
                                 // получение значения выбранного количества паролей и переведение этого значения в число командой parseInt()
     var numberPassword = parseInt(document.getElementById('number-password').value);
 
+                                // сортировка записаного массива рандомно
+    result.sort(random);
+
+                                // проверка есть ли из чего генерировать
+    if (result.length == 0) {
+
+                                // вывод сообщения об ошибке
+        alert("Выберите хотябы один из выриантов для генерации!");
+
+                                // останавливаем выполнение
+        return
+
+                                // условие выполнено и выполняется дальше
+    } else {
+
                                 // цикл для создания случайных паролей на странице
     for (var q = 0; q < numberPassword; q++){
 
                                 // получение значения выбранного количества элементов и переведение этого значения в число командой parseInt()
-    var lineLength = parseInt(document.getElementById('line-length').value);
+        var lineLength = parseInt(document.getElementById('line-length').value);
 
-                                // создание пустой строки для дальнейшего заполнения
-    var pass = '';
+                                    // создание пустой строки для дальнейшего заполнения
+        var pass = '';
 
-                                // заполнение строки рандомно перемешанным массивом
-    for (var i = 0; i<lineLength; i++){
-        pass += result[getRandomInt(0, result.length - 1)];
+                                    // заполнение строки рандомно перемешанным массивом
+        for (var i = 0; i < lineLength; i++){
+            pass += result[getRandomInt(0, result.length - 1)];
 
-                                // выведение полученого пароля
-    }document.getElementById('out').innerHTML += '<p>' + pass + '</p>';
+                                    // выведение полученого пароля
+        }document.getElementById('out').innerHTML += '<p>' + pass + '</p>';
 
-                                // после окончания генерации поднять экран к паролям (для телефонов)
-        function up() {
-            if (window.pageYOffset > 0) {
-                window.scrollBy(0, -1);
-                setTimeout(up, 3);
+                                    // функция поднять экран к паролям (для телефонов)
+            function up() {
+                if (window.pageYOffset > 0) {
+                    window.scrollBy(0, -20);
+                    setTimeout(up, 4);
+                };
             };
-        };
 
-        up();
+                                    // вызов функции для поднятия экрана на пароли
+            up();
+        };
     };
 };
 
