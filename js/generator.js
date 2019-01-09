@@ -46,11 +46,29 @@ function generatePass() {
                                 // проверка есть ли из чего генерировать
     if (result.length == 0) {
 
-                                // вывод сообщения об ошибке
-        alert("Выберите хотябы один из выриантов для генерации!");
+                                // создаём функцию для вывода подсказки
+        var prompt = function () {
 
-                                // останавливаем выполнение
-        return
+                                // создаём 3 переменных и привязываем id
+            var help = document.getElementById('help');
+            var closeHelp = document.getElementById('closet-help');
+            var gen = document.getElementById('gen');
+
+                                // скрываем генератор и показываем подсказку
+            gen.style.display = "none";
+            help.style.display = "block";
+
+                                // отслеживание клика и вызов функции возвращения к генератору
+            closeHelp.addEventListener('click', function () {
+
+                                // скрываем подсказку и показываем генератор
+                gen.style.display = "block";
+                help.style.display = "none";
+            });
+        };
+
+                                // вызов функции открытия подсказки
+        prompt();
 
                                 // условие выполнено и выполняется дальше
     } else {
